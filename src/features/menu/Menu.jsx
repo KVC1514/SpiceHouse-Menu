@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import MenuItem from "./MenuItem";
+import Search from "./Search";
 
 function Menu() {
   return (
     <div>
-      <h1>Spice House Menu</h1>
+      <header>
+        <Search />
+      </header>
+      <h2>Spice House Menu</h2>
       <Link to="/">Back to Home</Link>
       <MenuItem />
     </div>
