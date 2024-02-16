@@ -5,10 +5,12 @@
 /* utils/index.css */
 
 .planet-background-1 {
+  position: relative;
+  overflow: hidden;
   background: radial-gradient(
     80.36% 80.36% at 18.95% 26.51%,
     #ff3333 0.56%,
-    /* Reddish color */ #c32f2f 9.37% /* Orange color */
+    /* Reddish color */ from #a81515 to#ff9900 9.37% /* Orange color */
       /* Add more color stops if needed */
   );
   background-size: 150% 150%;
@@ -21,5 +23,9 @@
 }
 
 .planet-background-1:hover {
-  background-color: #ff6666; /* Darker reddish color on hover */
+  background-color: #ff3333; /* Darker reddish color on hover */
+  cursor: pointer; /* Add a pointer cursor on hover for better UX */
+}
+.body {
+  background-color: #ff3333;
 }

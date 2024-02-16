@@ -4,6 +4,8 @@ import Menu from "../features/menu/Menu";
 import Home from "../ui/Home";
 import Error from "../ui/Error";
 import AppLayout from "../ui/AppLayout";
+import Calculator from "../features/menu/calculator";
+import Weather from "../features/menu/Weather";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
+      },
+      {
+        path: "/calculator",
+        element: <Calculator />,
+      },
+      {
+        path: "/weather",
+        element: <Weather />,
       },
     ],
   },
