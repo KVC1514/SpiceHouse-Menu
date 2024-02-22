@@ -12,9 +12,9 @@ function ImageSlider() {
     { url: "images/vp.jpg", title: "Vegsamosa" },
   ];
 
-  // const changeBodyBackgroundColor = () => {
-  //   document.body.style.backgroundColor = "#ff3333"; // Replace with your desired color code
-  // };
+  const changeBodyBackgroundColor = () => {
+    document.body.style.backgroundColor = "#ff3333";
+  };
 
   const containerStyles = {
     position: "relative",
@@ -80,7 +80,7 @@ function ImageSlider() {
         {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}
-            style={dotStyles}
+            styles={dotStyles}
             onClick={() => goToSlide(slideIndex)}
           >
             ⚫️

@@ -19,7 +19,7 @@ function ServiceCard({ title, text, linkTo, image }) {
       onMouseLeave={handleLeave}
     >
       <div className="rounded-lg shadow-sm cursor-pointer p-8 text-center">
-        <div className="inline-block w-12 h-12 bg-white-300 rounded-md">
+        <div className="inline-block w-20 h-20 bg-white-300 rounded-md">
           {image}
         </div>
         <h3 className="mt-4 text-xl font-medium text-gray-800">{title}</h3>
