@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -66,14 +68,15 @@ function ImageSlider() {
 
   return (
     <div style={containerStyles}>
-      <div style={slideStyles}></div>
-      <div style={{ ...arrowStyles, right: "10px" }} onClick={goToNext}>
-        {/* Add your right arrow component or icon here */}
-        ➡️
-      </div>
-      <div style={{ ...arrowStyles, left: "10px" }} onClick={goToPrevious}>
-        {/* Add your left arrow component or icon here */}
-        ⬅️
+      <div style={slideStyles}>
+        <div style={{ ...arrowStyles, right: "10px" }} onClick={goToNext}>
+          {/* Add your right arrow component or icon here */}
+          <ArrowForwardIosIcon />
+        </div>
+        <div style={{ ...arrowStyles, left: "10px" }} onClick={goToPrevious}>
+          {/* Add your left arrow component or icon here */}
+          <ArrowBackIosIcon />
+        </div>
       </div>
 
       <div style={dotsContainerStyles}>

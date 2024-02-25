@@ -1,17 +1,45 @@
 import { Link } from "react-router-dom";
-import MenuItem from "./MenuItem";
+import { MenuList } from "../../data/data";
+
 import Search from "./Search";
+import AppLayout from "../../ui/AppLayout";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 
 function Menu() {
   return (
-    <div>
+    <AppLayout>
       <header>
         <Search />
       </header>
-      <h2>Spice House Menu</h2>
-      <Link to="/">Back to Home</Link>
-      <MenuItem />
-    </div>
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        {MenuList.map((menu) => (
+          <Card sx={{ maxWidth: "390px", display: "flex", m: 2 }}>
+            <CardActionArea>
+              <CardMedia
+                sx={{ minHeight: "400px" }}
+                component={"img"}
+                src={menu.image}
+                alt={menu.name}
+              />
+              <CardContent>
+                <Typography variant="h5" gutterBottom com={"div"}>
+                  {menu.name}
+                </Typography>
+                <Typography variant="body2">{menu.description}</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+      </Box>
+    </AppLayout>
   );
 }
 

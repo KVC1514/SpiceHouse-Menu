@@ -4,9 +4,13 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap");
 
-/* utils/index.css */
-
-.planet-background-1 {
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap")
+  /* .lobster-regular {
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+} */
+  /* utils/index.css */ .planet-background-1 {
   position: relative;
   overflow: hidden;
   background: radial-gradient(
@@ -30,6 +34,7 @@
 }
 .body {
   background-color: #ff3333;
+  font-family: roboto, san;
 }
 
 * {
@@ -184,3 +189,5 @@ input:focus {
   color: white;
   font-size: 2.5rem;
 }
+
+/* MENU */

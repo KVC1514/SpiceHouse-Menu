@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../../utils/index.css";
+import AppLayout from "../../ui/AppLayout";
 
 function getWeatherIcon(wmoCode) {
   const icons = new Map([
@@ -93,7 +94,7 @@ class Weather extends React.Component {
 
   render() {
     return (
-      <div>
+      <AppLayout>
         <br />
         <br />
         <div className="weatherapp">
@@ -113,7 +114,7 @@ class Weather extends React.Component {
             />
           )}
         </div>
-      </div>
+      </AppLayout>
     );
   }
 }

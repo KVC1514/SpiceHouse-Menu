@@ -3,13 +3,15 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Menu from "../features/menu/Menu";
 import Home from "../ui/Home";
 import Error from "../ui/Error";
-import AppLayout from "../ui/AppLayout";
-import Calculator from "../features/menu/calculator";
+import Calculator from "../features/menu/Calculator";
 import Weather from "../features/menu/Weather";
+import About from "../../public/pages/About";
+import Contact from "../../public/pages/Contact";
+// import Footer from "../../public/pages/Footer";
 
 const router = createBrowserRouter([
   {
-    element: <AppLayout />,
+    // element: <AppLayout />,
     errorElement: <Error />,
 
     children: [
@@ -29,6 +31,18 @@ const router = createBrowserRouter([
         path: "/weather",
         element: <Weather />,
       },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      // {
+      //   path: "/footer",
+      //   element: <Footer />,
+      // },
     ],
   },
 ]);
