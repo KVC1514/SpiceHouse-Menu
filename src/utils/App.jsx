@@ -7,11 +7,12 @@ import Calculator from "../features/menu/Calculator";
 import Weather from "../features/menu/Weather";
 import About from "../../public/pages/About";
 import Contact from "../../public/pages/Contact";
+
+// import AddEditUser from "../components/fileUpload1/pages/AddEditUser";
 // import Footer from "../../public/pages/Footer";
 
 const router = createBrowserRouter([
   {
-    // element: <AppLayout />,
     errorElement: <Error />,
 
     children: [
@@ -39,6 +40,17 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+
+      // Fix bug
+      // {
+      //   path: "/add",
+      //   element: <AddEditUser />,
+      // },
+      // {
+      //   path: "/update/:id",
+      //   element: <AddEditUser />,
+      // },
+
       // {
       //   path: "/footer",
       //   element: <Footer />,

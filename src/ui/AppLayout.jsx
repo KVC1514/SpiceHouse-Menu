@@ -3,6 +3,7 @@ import Header from "./Header";
 import Loader from "./Loader";
 import Footer from "../../public/pages/Footer";
 
+
 function AppLayout({ children }) {
   const navigation = useNavigate();
   const isLoading = navigation.state === "loading";
@@ -12,6 +13,7 @@ function AppLayout({ children }) {
         {isLoading && <Loader />}
         <Header />
         <div>{children}</div>
+        
         <Footer />
       </div>
     </>
