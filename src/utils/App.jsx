@@ -7,6 +7,7 @@ import Calculator from "../features/menu/Calculator";
 import Weather from "../features/menu/Weather";
 import About from "../../public/pages/About";
 import Contact from "../../public/pages/Contact";
+import FileUpload from "../../public/pages/FileUpload";
 
 // import AddEditUser from "../components/fileUpload1/pages/AddEditUser";
 // import Footer from "../../public/pages/Footer";
@@ -42,14 +43,14 @@ const router = createBrowserRouter([
       },
 
       // Fix bug
-      // {
-      //   path: "/add",
-      //   element: <AddEditUser />,
-      // },
-      // {
-      //   path: "/update/:id",
-      //   element: <AddEditUser />,
-      // },
+      {
+        path: "/add",
+        element: <FileUpload />,
+      },
+      {
+        path: "/update/:id",
+        element: <FileUpload />,
+      },
 
       // {
       //   path: "/footer",

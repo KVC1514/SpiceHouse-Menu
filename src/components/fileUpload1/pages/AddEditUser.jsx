@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
-import { storage } from "../../../firebase";
+// import { storage } from "../../../firebase";
 import { useParams, useNavigate } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import "firebase/storage";
 
 const initialState = {
   //Adding containt.
@@ -11,13 +13,21 @@ const initialState = {
 
 const AddEditUser = () => {
   const [data, setData] = useState(initialState);
-  const { Name, Info } = data;
+  const { Name } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let errors = validate();
+  };
+
   return (
     <div>
       <h1>
@@ -34,15 +44,20 @@ const AddEditUser = () => {
                   <Loader active inline="centered" size="huge" />
                 ) : (
                   <>
-                    <h2>Add User</h2>
-                    <Form>
+                    <h2>Add Images</h2>
+                    <Form onSubmit={handleSubmit}>
                       <Form.Input
-                        label="Name"
+                        label="Item name"
                         placeHolder="Enter Name"
-                        name="name"
+                        name="Name"
                         onChange={handleChange}
                         value={Name}
                         autoFocus
+                      />
+                      <Form.Input
+                        label="Upload Image"
+                        type="file"
+                        onChange={(e) => setFile(e.target.files[0])}
                       />
                     </Form>
                   </>

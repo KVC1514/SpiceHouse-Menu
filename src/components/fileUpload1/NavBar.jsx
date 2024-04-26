@@ -17,7 +17,7 @@ const NavBar = () => {
         </Menu.Item>
         <Menu.Item position="right">
           <Button size="mini" primary onClick={() => navigate("/add")}>
-            Add User
+            Sign in
           </Button>
         </Menu.Item>
       </Container>
