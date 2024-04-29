@@ -4,6 +4,16 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useParams, useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../main";
+import { Try } from "@mui/icons-material";
 
 const initialState = {
   Name: "",
@@ -12,12 +22,26 @@ const initialState = {
 
 const AddEditUser = () => {
   const [data, setData] = useState(initialState);
-  const { Name } = data; // Changed 'name' to 'Name' for consistency
+  const { Name, Info } = data; // Changed 'name' to 'Name' for consistency
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
+  // Editing the file
+  useEffect(() => {
+    id && getSingleUser();
+  }, [id]);
+
+  const getSingleUser = async () => {
+    const docRef = doc(db, "users", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      setData({ ...snapshot.data() });
+    }
+  };
   //File Upload
   useEffect(() => {
     const uploadFile = () => {
@@ -69,14 +93,40 @@ const AddEditUser = () => {
       errors.Name = "Item Name Required"; // Changed 'name' to 'Name' for consistency
     }
 
+    if (!Info) {
+      errors.Info = "Information Required";
+    }
+
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let errors = validate();
     if (Object.keys(errors).length) return setErrors(errors);
     // Additional logic for submitting form data if needed
+    setIsSubmit(true);
+    if (!id) {
+      try {
+        await addDoc(collection(db, "users"), {
+          ...data,
+          timestamp: serverTimestamp(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await updateDoc(doc(db, "users", id), {
+          ...data,
+          timestamp: serverTimestamp(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    navigate("/");
   };
 
   return (
@@ -106,6 +156,14 @@ const AddEditUser = () => {
                         value={Name}
                         autoFocus
                       />
+                      <Form.TextArea
+                        label="Info"
+                        placeholder="Enter Info"
+                        name="info"
+                        onChange={handleChange}
+                        value={Info}
+                      />
+
                       <Form.Input
                         label="Upload Image"
                         type="file"

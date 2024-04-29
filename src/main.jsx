@@ -5,6 +5,8 @@ import "semantic-ui-css/semantic.min.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC6eN3M1cvnX13NV2RjIacrDUBNhv6J92Y",
   authDomain: "spice-house-5bed4.firebaseapp.com",
@@ -16,6 +18,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+export const db = getFirestore(App);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
