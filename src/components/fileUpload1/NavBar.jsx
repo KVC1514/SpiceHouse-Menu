@@ -1,6 +1,6 @@
 import React from "react";
-import { Menu, Container, Button, Image } from "semantic-ui-react";
-import { useNavigate, Link } from "react-router-dom";
+import { Menu, Container, Button } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -13,11 +13,11 @@ const NavBar = () => {
     >
       <Container>
         <Menu.Item>
-          <h2>Upload Image</h2>
+          <h2>Edit Menu</h2>
         </Menu.Item>
         <Menu.Item position="right">
           <Button size="mini" primary onClick={() => navigate("/add")}>
-            Sign in
+            Add item
           </Button>
         </Menu.Item>
       </Container>

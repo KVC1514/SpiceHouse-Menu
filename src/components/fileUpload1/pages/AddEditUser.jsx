@@ -22,7 +22,7 @@ const initialState = {
 
 const AddEditUser = () => {
   const [data, setData] = useState(initialState);
-  const { Name, Info } = data; // Changed 'name' to 'Name' for consistency
+  const { Name, Info } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
@@ -158,8 +158,9 @@ const AddEditUser = () => {
                       />
                       <Form.TextArea
                         label="Info"
-                        placeholder="Enter Info"
-                        name="info"
+                        placeholder="Enter Information about the dish!!"
+                        error={errors.Info ? { content: errors.Info } : null}
+                        name="Info"
                         onChange={handleChange}
                         value={Info}
                       />

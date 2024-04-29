@@ -72,6 +72,12 @@
 //   },
 // ];
 
+
+
+
+
+
+
 import React, { useEffect, useState } from "react";
 import { db } from "../main";
 import { Button, Card, Grid, Container, Image } from "semantic-ui-react";
@@ -82,6 +88,7 @@ import { border, borderRadius, width } from "@mui/system";
 export const MenuList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); // State for handling errors
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -97,18 +104,28 @@ export const MenuList = () => {
         setLoading(false);
       },
       (error) => {
-        console.log(error);
+        console.error("Error fetching data:", error); // Handle error
+        setError(error); // Set error state
+        setLoading(false);
       }
     );
+
+    // Cleanup function for unsubscribing from snapshot listener
+    return () => unsub();
   }, []);
+
   return (
     <Container>
-      <Card.Group>
-        <Grid columns={3} stackable>
-          {users &&
-            users.map((item) => (
-              <Grid.Column>
-                <Card key={item.id}>
+      {loading ? (
+        <p>Loading...</p> // Display loading message while data is being fetched
+      ) : error ? (
+        <p>Error: {error.message}</p> // Display error message if there's an error
+      ) : (
+        <Card.Group>
+          <Grid columns={3} stackable>
+            {users.map((item) => (
+              <Grid.Column key={item.id}>
+                <Card>
                   <Card.Content>
                     <Image
                       src={item.img}
@@ -123,8 +140,9 @@ export const MenuList = () => {
                 </Card>
               </Grid.Column>
             ))}
-        </Grid>
-      </Card.Group>
+          </Grid>
+        </Card.Group>
+      )}
     </Container>
   );
 };

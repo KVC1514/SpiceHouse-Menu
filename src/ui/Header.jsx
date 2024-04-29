@@ -58,13 +58,16 @@ function Header() {
           </NavLink>
         </li>
         <li>
-          <NavLink to={"/menu"}>Menu</NavLink>
+          <NavLink to={"/menu"}>Order Now</NavLink>
         </li>
         <li>
           <NavLink to={"/about"}>About</NavLink>
         </li>
         <li>
           <NavLink to={"/contact"}>Contact</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/add"}>Edit Menu</NavLink>
         </li>
       </ul>
     </Box>
@@ -109,13 +112,16 @@ function Header() {
                   <Link to={"/"}>Home</Link>
                 </li>
                 <li>
-                  <Link to={"/menu"}>Menu</Link>
+                  <Link to={"/menu"}>Order Now</Link>
                 </li>
                 <li>
                   <Link to={"/about"}>About</Link>
                 </li>
                 <li>
                   <Link to={"/contact"}>Contact</Link>
+                </li>
+                <li>
+                  <Link to={"/add"}>Edit Menu</Link>
                 </li>
               </ul>
             </Box>
