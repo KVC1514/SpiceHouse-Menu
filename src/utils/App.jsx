@@ -8,6 +8,7 @@ import Weather from "../features/menu/Weather";
 import About from "../../public/pages/About";
 import Contact from "../../public/pages/Contact";
 import FileUpload from "../../public/pages/FileUpload";
+// import Cart from "../cart/Cart";
 
 // import AddEditUser from "../components/fileUpload1/pages/AddEditUser";
 // import Footer from "../../public/pages/Footer";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         path: "/update/:id",
         element: <FileUpload />,
       },
+      // {
+      //   path: "/cart",
+      //   element: <Cart />,
+      // },
 
       // {
       //   path: "/footer",

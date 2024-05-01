@@ -72,13 +72,7 @@
 //   },
 // ];
 
-
-
-
-
-
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../main";
 import { Button, Card, Grid, Container, Image } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import "../../public/styles/HeaderStyles.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import "../utils/index.css";
 import "tailwindcss/tailwind.css";
 import {
@@ -58,7 +58,7 @@ function Header() {
           </NavLink>
         </li>
         <li>
-          <NavLink to={"/menu"}>Order Now</NavLink>
+          <NavLink to={"/menu"}>View Menu</NavLink>
         </li>
         <li>
           <NavLink to={"/about"}>About</NavLink>
@@ -112,7 +112,7 @@ function Header() {
                   <Link to={"/"}>Home</Link>
                 </li>
                 <li>
-                  <Link to={"/menu"}>Order Now</Link>
+                  <Link to={"/menu"}>View Menu</Link>
                 </li>
                 <li>
                   <Link to={"/about"}>About</Link>

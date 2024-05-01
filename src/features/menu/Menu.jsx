@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import AppLayout from "../../ui/AppLayout";
-import React, { useEffect, useState } from "react";
 import { db } from "../../main";
 import { Card, Grid, Container, Image, Button } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import Spinner from "../../components/fileUpload1/Spinner";
 function Menu() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState({}); // Change state initialization to object
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -35,13 +35,9 @@ function Menu() {
     return () => unsub();
   }, []);
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   const handleModal = (item) => {
     setOpen(true);
-    setUser(item); // Set user data for the modal
+    setUser(item);
   };
 
   const handleDelete = async (id) => {
@@ -58,59 +54,51 @@ function Menu() {
 
   return (
     <AppLayout>
-      <header>{/* <Search /> */}</header>
       <NavBar />
-
       <Container>
         <Grid columns={3} stackable>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            users.map((item) => (
-              <Grid.Column key={item.id}>
-                {" "}
-                {/* Add key prop to Grid.Column */}
-                <Card>
-                  <Card.Content>
-                    <Image
-                      src={item.img}
-                      size="medium"
-                      style={{
-                        height: "175px",
-                        width: "300px",
-                        borderRadius: "60%",
-                      }}
-                    />
-                    <Card.Header style={{ marginTop: "10px" }}>
-                      {item.Name}
-                    </Card.Header>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <Button
-                      color="green"
-                      onClick={() => navigate(`/update/${item.id}`)}
-                    >
-                      Update
-                    </Button>
-                    <Button color="purple" onClick={() => handleModal(item)}>
-                      View
-                    </Button>
-                    {open && (
-                      <ModalComp
-                        key={item.id}
-                        open={open}
-                        setOpen={setOpen}
-                        handleDelete={handleDelete}
-                        {...user}
-                      />
-                    )}
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            ))
-          )}
+          {users.map((item) => (
+            <Grid.Column key={item.id}>
+              <Card>
+                <Card.Content>
+                  <Image
+                    src={item.img}
+                    size="medium"
+                    style={{
+                      height: "175px",
+                      width: "300px",
+                      borderRadius: "60%",
+                    }}
+                  />
+                  <Card.Header style={{ marginTop: "10px" }}>
+                    {item.Name}
+                  </Card.Header>
+                </Card.Content>
+                <Card.Content extra>
+                  <Button
+                    color="green"
+                    onClick={() => navigate(`/update/${item.id}`)}
+                  >
+                    Update
+                  </Button>
+                  <Button color="purple" onClick={() => handleModal(item)}>
+                    View
+                  </Button>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          ))}
         </Grid>
+        {open && (
+          <ModalComp
+            open={open}
+            setOpen={setOpen}
+            handleDelete={handleDelete}
+            {...user}
+          />
+        )}
       </Container>
+      {loading && <Spinner />}
     </AppLayout>
   );
 }
