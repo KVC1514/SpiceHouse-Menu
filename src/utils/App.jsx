@@ -11,6 +11,7 @@ import FileUpload from "../../public/pages/FileUpload";
 import SignIn from "../auth/SignIn";
 import SignUp from "../auth/SignUp";
 import AuthDetails from "../auth/AuthDetails";
+import CustomerMenu from "../menuItem/CustomerMenu";
 // import Cart from "../cart/Cart";
 
 // import AddEditUser from "../components/fileUpload1/pages/AddEditUser";
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/update/:id",
         element: <FileUpload />,
+      },
+      {
+        path: "/customerMenu",
+        element: <CustomerMenu />,
       },
       { path: "/signIn", element: <SignIn /> },
       { path: "/signUp", element: <SignUp /> },

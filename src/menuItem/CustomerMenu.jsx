@@ -1,12 +1,12 @@
-import AppLayout from "../../ui/AppLayout";
+import AppLayout from "../ui/AppLayout";
 import { useState, useEffect } from "react";
-import { db } from "../../main";
+import { db } from "../main";
 import { Card, Grid, Container, Image, Button } from "semantic-ui-react";
 // import { useNavigate } from "react-router-dom";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import ModalComp from "../../components/fileUpload1/pages/ModalComp";
-import NavBar from "../../components/fileUpload1/NavBar";
-import Spinner from "../../components/fileUpload1/Spinner";
+import ModalComp from "../components/fileUpload1/pages/ModalComp";
+// import NavBar from "../components/fileUpload1/NavBar";
+import Spinner from "../components/fileUpload1/Spinner";
 
 function Menu() {
   const [users, setUsers] = useState([]);
@@ -59,7 +59,7 @@ function Menu() {
   return (
     <AppLayout>
       <header>{/* <Search /> */}</header>
-      <NavBar />
+      {/* <NavBar /> */}
 
       <Container>
         <Grid columns={3} stackable>
@@ -100,7 +100,7 @@ function Menu() {
                         key={item.id}
                         open={open}
                         setOpen={setOpen}
-                        handleDelete={handleDelete}
+                        // handleDelete={handleDelete}
                         {...user}
                       />
                     )}
