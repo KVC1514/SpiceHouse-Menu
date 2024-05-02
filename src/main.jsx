@@ -4,9 +4,8 @@ import App from "./utils/App.jsx";
 import "semantic-ui-css/semantic.min.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import "firebase/compat/auth"; 
+import "firebase/compat/auth";
 import { getFirestore } from "firebase/firestore";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyC6eN3M1cvnX13NV2RjIacrDUBNhv6J92Y",
@@ -27,5 +26,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 );
-
-

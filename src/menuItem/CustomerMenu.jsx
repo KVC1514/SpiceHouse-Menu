@@ -4,7 +4,7 @@ import { db } from "../main";
 import { Card, Grid, Container, Image, Button } from "semantic-ui-react";
 // import { useNavigate } from "react-router-dom";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import ModalComp from "../components/fileUpload1/pages/ModalComp";
+import ModalCompCustomer from "./ModalCompCustomer";
 // import NavBar from "../components/fileUpload1/NavBar";
 import Spinner from "../components/fileUpload1/Spinner";
 
@@ -44,17 +44,17 @@ function Menu() {
     setUser(item); // Set user data for the modal
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this?")) {
-      try {
-        setOpen(false);
-        await deleteDoc(doc(db, "users", id));
-        setUsers(users.filter((user) => user.id !== id));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   if (window.confirm("Are you sure you want to delete this?")) {
+  //     try {
+  //       setOpen(false);
+  //       await deleteDoc(doc(db, "users", id));
+  //       setUsers(users.filter((user) => user.id !== id));
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
   return (
     <AppLayout>
@@ -96,7 +96,7 @@ function Menu() {
                       View
                     </Button>
                     {open && (
-                      <ModalComp
+                      <ModalCompCustomer
                         key={item.id}
                         open={open}
                         setOpen={setOpen}

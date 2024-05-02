@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+
+
+import { useState, useEffect } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useParams, useNavigate } from "react-router-dom";
@@ -13,7 +15,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../main";
-import { Try } from "@mui/icons-material";
 
 const initialState = {
   Name: "",
@@ -42,12 +43,13 @@ const AddEditUser = () => {
       setData({ ...snapshot.data() });
     }
   };
-  //File Upload
+
+  // File Upload
   useEffect(() => {
     const uploadFile = () => {
       if (!file) return;
       const fileName = new Date().getTime() + "_" + file.name; // Unique file name
-      const storageRef = ref(firebase.storage(), fileName); // Corrected storageRef
+      const storageRef = ref(firebase.storage(), fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
@@ -79,18 +81,17 @@ const AddEditUser = () => {
     };
 
     // Executing upload file
-
     file && uploadFile();
   }, [file]);
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value }); // Changed 'Name' to 'name' for consistency
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const validate = () => {
     let errors = {};
     if (!Name) {
-      errors.Name = "Item Name Required"; // Changed 'name' to 'Name' for consistency
+      errors.Name = "Item Name Required";
     }
 
     if (!Info) {
@@ -104,29 +105,24 @@ const AddEditUser = () => {
     e.preventDefault();
     let errors = validate();
     if (Object.keys(errors).length) return setErrors(errors);
-    // Additional logic for submitting form data if needed
+
     setIsSubmit(true);
-    if (!id) {
-      try {
+    try {
+      if (!id) {
         await addDoc(collection(db, "users"), {
           ...data,
           timestamp: serverTimestamp(),
         });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
+      } else {
         await updateDoc(doc(db, "users", id), {
           ...data,
           timestamp: serverTimestamp(),
         });
-      } catch (error) {
-        console.log(error);
       }
+      navigate("/menu"); // Navigate after successful form submission
+    } catch (error) {
+      console.log(error);
     }
-
-    navigate("/");
   };
 
   return (
@@ -164,17 +160,12 @@ const AddEditUser = () => {
                         onChange={handleChange}
                         value={Info}
                       />
-
                       <Form.Input
                         label="Upload Image"
                         type="file"
                         onChange={(e) => setFile(e.target.files[0])}
                       />
-                      <Button
-                        primary
-                        type="submit"
-                        disabled={progress !== null && progress < 100}
-                      >
+                      <Button primary type="submit">
                         Submit
                       </Button>
                     </Form>
