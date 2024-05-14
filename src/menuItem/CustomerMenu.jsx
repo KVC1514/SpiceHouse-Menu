@@ -78,12 +78,21 @@ function Menu() {
                       style={{
                         height: "175px",
                         width: "300px",
-                        borderRadius: "60%",
+                        // border: "60%",
                       }}
                     />
-                    <Card.Header style={{ marginTop: "10px" }}>
-                      {item.Name}
-                    </Card.Header>
+                    <div style={{ marginTop: "10px" }}>
+                      <Card.Header style={{ marginTop: "10px" }}>
+                        <bold>{item.Name}</bold>
+                      </Card.Header>
+                      <div style={{ textAlign: "right" }}>
+                        <span
+                          style={{ marginLeft: "10px", textAlign: "right" }}
+                        >
+                          {item.Price}
+                        </span>
+                      </div>
+                    </div>
                   </Card.Content>
                   <Card.Content extra>
                     {/* <Button
@@ -92,9 +101,11 @@ function Menu() {
                     >
                       Update
                     </Button> */}
-                    <Button color="purple" onClick={() => handleModal(item)}>
-                      View
-                    </Button>
+                    <div style={{ textAlign: "center" }}>
+                      <Button color="purple" onClick={() => handleModal(item)}>
+                        View
+                      </Button>
+                    </div>
                     {open && (
                       <ModalCompCustomer
                         key={item.id}

@@ -76,5 +76,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 5rem;
+}
+.video {
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  z-index: -1;
+
+  opacity: 0.5;
+  padding: 5rem;
+
+  top: 20%;
+  object-fit: cover;
 }

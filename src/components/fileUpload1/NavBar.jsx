@@ -1,4 +1,3 @@
-import React from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +17,22 @@ const NavBar = () => {
         <Menu.Item position="right">
           <Button size="mini" primary onClick={() => navigate("/add")}>
             Add item
+          </Button>
+          <Button
+            size="mini"
+            primary
+            onClick={() => navigate("/menu")}
+            style={{ marginLeft: "10px" }}
+          >
+            Edit Menu
+          </Button>
+          <Button
+            size="mini"
+            primary
+            onClick={() => navigate("/signIn")}
+            style={{ marginLeft: "10px" }}
+          >
+            Log Out
           </Button>
         </Menu.Item>
       </Container>

@@ -18,7 +18,7 @@ function ServiceSelection() {
           <ServiceCard
             title="Menu"
             text="Checkout our Menu"
-            linkTo="/Menu"
+            linkTo="/CustomerMenu"
             image={
               <img
                 width="55"
@@ -35,8 +35,8 @@ function ServiceSelection() {
             linkTo="/Calculator"
             image={
               <img
-                width="94"
-                height="94"
+                width="250"
+                height="250"
                 src="https://img.icons8.com/3d-fluency/94/calculator.png"
                 alt="calculator"
               />

@@ -194,3 +194,21 @@ input:focus {
 .ui.dimmer {
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
+
+
+.sign-in-container{
+  align-items:baseline;
+  width: 20rem;
+  margin: 1;
+  padding: 2rem 1rem;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  justify-content: center;
+  /* margin-bottom: 2rem; */
+
+}
+
+.logIn{
+  font-size: 18px;
+}

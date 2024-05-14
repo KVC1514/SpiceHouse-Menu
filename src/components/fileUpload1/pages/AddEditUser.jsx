@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -19,11 +17,12 @@ import { db } from "../../../main";
 const initialState = {
   Name: "",
   Info: "",
+  Price: "",
 };
 
 const AddEditUser = () => {
   const [data, setData] = useState(initialState);
-  const { Name, Info } = data;
+  const { Name, Info, Price } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
@@ -84,8 +83,19 @@ const AddEditUser = () => {
     file && uploadFile();
   }, [file]);
 
+  // const handleChange = (e) => {
+
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let processedValue = value;
+    // If the field is Price, remove any non-numeric or non-currency symbol characters
+    if (name === "Price") {
+      processedValue = value.replace(/[^0-9$€£.,]/g, "");
+    }
+    setData((prevData) => ({
+      ...prevData,
+      [name]: processedValue,
+    }));
   };
 
   const validate = () => {
@@ -96,6 +106,9 @@ const AddEditUser = () => {
 
     if (!Info) {
       errors.Info = "Information Required";
+    }
+    if (!Price) {
+      errors.Price = "Enter the price for the Item";
     }
 
     return errors;
@@ -160,6 +173,15 @@ const AddEditUser = () => {
                         onChange={handleChange}
                         value={Info}
                       />
+                      <Form.Input
+                        label="Price"
+                        placeholder="Enter Price"
+                        name="Price"
+                        onChange={handleChange}
+                        value={Price}
+                        error={errors.Price ? { content: errors.Price } : null}
+                      />
+
                       <Form.Input
                         label="Upload Image"
                         type="file"

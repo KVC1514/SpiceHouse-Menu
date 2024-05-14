@@ -6,7 +6,7 @@ import "../utils/index.css";
 import AppLayout from "./AppLayout";
 import "../../public/styles/HomeStyles.css";
 
-import Background from "../../public/images/background.jpg";
+import Video from "../video/Video";
 
 function Home() {
   // const containerStyles = {
@@ -15,13 +15,13 @@ function Home() {
   // };
   return (
     <AppLayout>
-      <div className="home" style={{ backgroundImage: `url(${Background})` }}>
+      <div className="home">
+        <div className="video">
+          <Video />
+        </div>
         <section className="pb-[150px] py-6 flex flex-col items-center justify-center bgcol, servicesContainer">
-          {/* <div className="box mt-4" style={containerStyles}>
-            <ImageSlider />
-          </div> */}
-
-          <div className="box mt-24">
+          <div>
+            <box />
             <ServiceSelection />
           </div>
         </section>

@@ -67,23 +67,34 @@ function Menu() {
                     style={{
                       height: "175px",
                       width: "300px",
-                      borderRadius: "60%",
+                      // borderRadius: "60%",
                     }}
                   />
-                  <Card.Header style={{ marginTop: "10px" }}>
-                    {item.Name}
-                  </Card.Header>
+                  <div style={{ marginTop: "10px" }}>
+                    <Card.Header style={{ marginTop: "10px" }}>
+                      <bold>{item.Name}</bold>
+                      <div style={{ textAlign: "right" }}>
+                        <span
+                          style={{ marginLeft: "10px", textAlign: "right" }}
+                        >
+                          {item.Price}
+                        </span>
+                      </div>
+                    </Card.Header>
+                  </div>
                 </Card.Content>
                 <Card.Content extra>
-                  <Button
-                    color="green"
-                    onClick={() => navigate(`/update/${item.id}`)}
-                  >
-                    Update
-                  </Button>
-                  <Button color="purple" onClick={() => handleModal(item)}>
-                    View
-                  </Button>
+                  <div style={{ textAlign: "center" }}>
+                    <Button
+                      color="green"
+                      onClick={() => navigate(`/update/${item.id}`)}
+                    >
+                      Update
+                    </Button>
+                    <Button color="purple" onClick={() => handleModal(item)}>
+                      View
+                    </Button>
+                  </div>
                 </Card.Content>
               </Card>
             </Grid.Column>
