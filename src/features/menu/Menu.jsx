@@ -7,6 +7,7 @@ import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import ModalComp from "../../components/fileUpload1/pages/ModalComp";
 import NavBar from "../../components/fileUpload1/NavBar";
 import Spinner from "../../components/fileUpload1/Spinner";
+import MenuSideNav from "../../components/fileUpload1/pages/MenuSideNav";
 
 function Menu() {
   const [users, setUsers] = useState([]);
@@ -55,24 +56,33 @@ function Menu() {
   return (
     <AppLayout>
       <NavBar />
-      <Container>
-        <Grid columns={3} stackable>
-          {users.map((item) => (
-            <Grid.Column key={item.id}>
-              <Card>
-                <Card.Content>
-                  <Image
-                    src={item.img}
-                    size="medium"
-                    style={{
-                      height: "175px",
-                      width: "300px",
-                      // borderRadius: "60%",
-                    }}
-                  />
-                  <div style={{ marginTop: "10px" }}>
-                    <Card.Header style={{ marginTop: "10px" }}>
-                      <bold>{item.Name}</bold>
+      <div style={{ display: "flex" }}>
+        <div style={{ flex: "0 0 150px" }}>
+          <MenuSideNav />
+        </div>
+        <Container style={{ minHeight: "500px" }}>
+          <Grid columns={3} stackable container spacing={3} sx={{ mb: 5 }}>
+            {users.map((item) => (
+              <Grid.Column key={item.id}>
+                <Card>
+                  <Card.Content>
+                    <Image
+                      src={item.img}
+                      size="medium"
+                      style={{
+                        height: "175px",
+                        width: "300px",
+                        // borderRadius: "60%",
+                      }}
+                    />
+
+                    <div style={{ marginTop: "10px" }}>
+                      <Card.Header style={{ marginTop: "10px" }}>
+                        {item.Name}
+                      </Card.Header>
+                      <div>
+                        <p>{item.Description}</p>
+                      </div>
                       <div style={{ textAlign: "right" }}>
                         <span
                           style={{ marginLeft: "10px", textAlign: "right" }}
@@ -80,36 +90,36 @@ function Menu() {
                           {item.Price}
                         </span>
                       </div>
-                    </Card.Header>
-                  </div>
-                </Card.Content>
-                <Card.Content extra>
-                  <div style={{ textAlign: "center" }}>
-                    <Button
-                      color="green"
-                      onClick={() => navigate(`/update/${item.id}`)}
-                    >
-                      Update
-                    </Button>
-                    <Button color="purple" onClick={() => handleModal(item)}>
-                      View
-                    </Button>
-                  </div>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-          ))}
-        </Grid>
-        {open && (
-          <ModalComp
-            open={open}
-            setOpen={setOpen}
-            handleDelete={handleDelete}
-            {...user}
-          />
-        )}
-      </Container>
-      {loading && <Spinner />}
+                    </div>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <div style={{ textAlign: "center" }}>
+                      <Button
+                        color="green"
+                        onClick={() => navigate(`/update/${item.id}`)}
+                      >
+                        Update
+                      </Button>
+                      <Button color="purple" onClick={() => handleModal(item)}>
+                        View
+                      </Button>
+                    </div>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            ))}
+          </Grid>
+          {open && (
+            <ModalComp
+              open={open}
+              setOpen={setOpen}
+              handleDelete={handleDelete}
+              {...user}
+            />
+          )}
+        </Container>
+        {loading && <Spinner />}
+      </div>
     </AppLayout>
   );
 }

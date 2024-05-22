@@ -195,9 +195,8 @@ input:focus {
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-
-.sign-in-container{
-  align-items:baseline;
+.sign-in-container {
+  align-items: baseline;
   width: 20rem;
   margin: 1;
   padding: 2rem 1rem;
@@ -206,9 +205,43 @@ input:focus {
   flex-direction: column;
   justify-content: center;
   /* margin-bottom: 2rem; */
-
 }
 
-.logIn{
+.logIn {
   font-size: 18px;
+}
+
+.textarea {
+  overflow: hidden;
+  resize: none;
+}
+body,
+html,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.AppLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.AppContent {
+  flex-grow: 2;
+}
+
+.footer {
+  background: #f1f1f1;
+  text-align: center;
+}
+
+.footer-content {
+  padding-top: 10px;
+  /* padding: 10px; */
+}
+
+.ui.dimmer {
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }

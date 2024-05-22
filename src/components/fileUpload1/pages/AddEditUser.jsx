@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useParams, useNavigate } from "react-router-dom";
@@ -18,21 +18,25 @@ const initialState = {
   Name: "",
   Info: "",
   Price: "",
+  Category: "",
+  Description: "",
 };
 
 const AddEditUser = () => {
   const [data, setData] = useState(initialState);
-  const { Name, Info, Price } = data;
+  const { Name, Info, Price, Category, Description } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const infoRef = useRef(null);
 
-  // Editing the file
   useEffect(() => {
-    id && getSingleUser();
+    if (id) {
+      getSingleUser();
+    }
   }, [id]);
 
   const getSingleUser = async () => {
@@ -43,11 +47,10 @@ const AddEditUser = () => {
     }
   };
 
-  // File Upload
   useEffect(() => {
     const uploadFile = () => {
       if (!file) return;
-      const fileName = new Date().getTime() + "_" + file.name; // Unique file name
+      const fileName = new Date().getTime() + "_" + file.name;
       const storageRef = ref(firebase.storage(), fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -59,10 +62,10 @@ const AddEditUser = () => {
           setProgress(progress);
           switch (snapshot.state) {
             case "paused":
-              console.log("Upload is Pause");
+              console.log("Upload is paused");
               break;
             case "running":
-              console.log("Upload is Running");
+              console.log("Upload is running");
               break;
             default:
               break;
@@ -79,16 +82,14 @@ const AddEditUser = () => {
       );
     };
 
-    // Executing upload file
-    file && uploadFile();
+    if (file) {
+      uploadFile();
+    }
   }, [file]);
-
-  // const handleChange = (e) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let processedValue = value;
-    // If the field is Price, remove any non-numeric or non-currency symbol characters
     if (name === "Price") {
       processedValue = value.replace(/[^0-9$€£.,]/g, "");
     }
@@ -96,6 +97,16 @@ const AddEditUser = () => {
       ...prevData,
       [name]: processedValue,
     }));
+    if (name === "Info" || name === "Description") {
+      adjustTextareaHeight(e.target);
+    }
+  };
+
+  const adjustTextareaHeight = (textarea) => {
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
   };
 
   const validate = () => {
@@ -103,14 +114,18 @@ const AddEditUser = () => {
     if (!Name) {
       errors.Name = "Item Name Required";
     }
-
     if (!Info) {
       errors.Info = "Information Required";
     }
     if (!Price) {
       errors.Price = "Enter the price for the Item";
     }
-
+    if (!Category) {
+      errors.Category = "Enter the category the item falls under";
+    }
+    if (!Description) {
+      errors.Description = "Enter a description for the food";
+    }
     return errors;
   };
 
@@ -132,14 +147,16 @@ const AddEditUser = () => {
           timestamp: serverTimestamp(),
         });
       }
-      navigate("/menu"); // Navigate after successful form submission
+      navigate("/menu");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div>
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
       <h1>
         <Grid
           centered
@@ -154,7 +171,7 @@ const AddEditUser = () => {
                   <Loader active inline="centered" size="huge" />
                 ) : (
                   <>
-                    <h2>Add Images</h2>
+                    <h2>Add Items</h2>
                     <Form onSubmit={handleSubmit}>
                       <Form.Input
                         label="Item name"
@@ -172,6 +189,8 @@ const AddEditUser = () => {
                         name="Info"
                         onChange={handleChange}
                         value={Info}
+                        ref={infoRef}
+                        style={{ overflow: "hidden", resize: "none" }}
                       />
                       <Form.Input
                         label="Price"
@@ -181,7 +200,29 @@ const AddEditUser = () => {
                         value={Price}
                         error={errors.Price ? { content: errors.Price } : null}
                       />
-
+                      <Form.Input
+                        label="Category"
+                        placeholder="Enter Category"
+                        name="Category"
+                        onChange={handleChange}
+                        value={Category}
+                        error={
+                          errors.Category ? { content: errors.Category } : null
+                        }
+                      />
+                      <Form.TextArea
+                        label="Description"
+                        placeholder="Enter a description of the food"
+                        error={
+                          errors.Description
+                            ? { content: errors.Description }
+                            : null
+                        }
+                        name="Description"
+                        onChange={handleChange}
+                        value={Description}
+                        style={{ overflow: "hidden", resize: "none" }}
+                      />
                       <Form.Input
                         label="Upload Image"
                         type="file"

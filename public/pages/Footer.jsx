@@ -1,54 +1,65 @@
-
 import { Box, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
 function Footer() {
   return (
-    <>
-      <Box sx={{ textAlign: "center", bgcolor: "red", color: "white", p: 3 }}>
+    <div className="footer">
+      <div className="footer-content">
         <Box
           sx={{
-            my: 3,
-            "& svg": {
-              fontSize: "60px",
-              cursor: "pointer",
-              mr: 2,
-            },
-            "& svg:hover": {
-              color: "black",
-              transform: "translateX(5px)",
-              transition: "all 400ms",
-            },
+            bgcolor: "red",
+            color: "white",
+            textAlign: "center",
+            p: 1,
+            // position: "fixed", // Position the footer at the bottom
+            bottom: 0, // Ensure it stays at the bottom
+            width: "100%", // Full width
           }}
         >
-          <a
-            href="https://www.instagram.com/spicehouse2024/?igsh=MWY1MHd3ZnNmbXh5cQ%3D%3D"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Box
+            sx={{
+              my: 2,
+              "& svg": {
+                fontSize: "40px",
+                cursor: "pointer",
+                mr: 2,
+              },
+              "& svg:hover": {
+                color: "black",
+                transform: "translateX(5px)",
+                transition: "all 400ms",
+              },
+            }}
           >
-            <InstagramIcon />
-          </a>
-          <a
-            href="https://www.facebook.com/profile.php?id=100088088538387"
-            target="_blank"
-            rel="noopener noreferrer"
+            <a
+              href="https://www.instagram.com/spicehouse2024/?igsh=MWY1MHd3ZnNmbXh5cQ%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=100088088538387"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FacebookIcon />
+            </a>
+          </Box>
+          <Typography
+            variant="h6"
+            sx={{
+              "@media (max-width: 600px)": {
+                fontSize: "1rem",
+              },
+            }}
           >
-            <FacebookIcon />
-          </a>
+            &copy;All Rights Reserved
+          </Typography>
         </Box>
-        <Typography
-          variant="h5"
-          sx={{
-            "@media (max-width: 600px)": {
-              fontSize: "1rem",
-            },
-          }}
-        >
-          &copy;All Rights Reserved
-        </Typography>
-      </Box>
-    </>
+      </div>
+    </div>
   );
 }
 
