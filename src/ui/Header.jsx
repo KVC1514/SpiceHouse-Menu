@@ -60,12 +60,12 @@ function Header() {
         <li>
           <NavLink to={"/customerMenu"}>View Menu</NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to={"/about"}>About</NavLink>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <NavLink to={"/contact"}>Contact</NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to={"/signIn"}>Edit Menu</NavLink>
         </li>
@@ -114,12 +114,12 @@ function Header() {
                 <li>
                   <Link to={"/customerMenu"}>View Menu</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to={"/about"}>About</Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to={"/contact"}>Contact</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to={"/signIn"}>Edit Menu</Link>
                 </li>

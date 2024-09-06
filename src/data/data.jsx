@@ -125,7 +125,7 @@ export const MenuList = () => {
                       src={item.img}
                       size="medium"
                       style={{
-                        height: "150px",
+                        height: "90px",
                         width: "150px",
                         borderRadius: "50%",
                       }}
