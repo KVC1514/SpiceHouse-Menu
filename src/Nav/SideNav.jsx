@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import SideBar from "./SideBar/SideBar";
 import Nav from "./Nav/Nav";
+import Products from "../products/Products";
+import { db } from "../main";
+import { collection, onSnapshot } from "firebase/firestore";
 
 function SideNav() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -31,7 +34,7 @@ function SideNav() {
   };
 
   //   Filtering Products All
-  function filteredData(products, selected, query) {
+  function filteredData(users, selected, query) {
     let filteredProducts = products;
 
     //   Filtering query input

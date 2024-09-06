@@ -1,7 +1,7 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
-import ServiceSelection from "../components/ServiceSelection";
-import ImageSlider from "../features/menu/media/ImageSlider";
+// import ServiceSelection from "../components/ServiceSelection";
+// import ImageSlider from "../features/menu/media/ImageSlider";
 import "../utils/index.css";
 import AppLayout from "./AppLayout";
 import "../../public/styles/HomeStyles.css";
