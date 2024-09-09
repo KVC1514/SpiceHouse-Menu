@@ -34,7 +34,6 @@ body {
   justify-content: center;
   background-size: cover;
   background-position: center;
- 
 }
 
 .sign-in-container {
@@ -67,11 +66,15 @@ body {
 }
 
 .sign-in-form input {
+  margin-bottom: 30px;
   margin-bottom: 1rem;
   padding: 0.8rem;
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
+}
+.sign-in-form input:nth-child(1) {
+  margin-bottom: 30px; /* This applies specifically to the email input */
 }
 
 .sign-in-form input:focus {

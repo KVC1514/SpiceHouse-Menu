@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import AppLayout from "../ui/AppLayout";
 import Background from "../../public/images/background.jpg";
+// import Background from "../../public/images/background2.jpg";
 import "./SignIn.css"; // Import the CSS file/
 
 function SignIn() {
@@ -37,18 +38,20 @@ function SignIn() {
           <div className="sign-in-page">
             <form onSubmit={signIn}>
               <h1 className="logIn">Enter Your Id and Password</h1>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <form onSubmit={signIn} className="sign-in-form">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </form>
               <Button type="submit">Log In</Button>
             </form>
           </div>
