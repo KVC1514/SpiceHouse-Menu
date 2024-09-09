@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Button, Form, Grid, Loader } from "semantic-ui-react";
+import { Button, Form, Grid, Loader, Dropdown } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useParams, useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
@@ -13,6 +13,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../main";
+import imageCompression from "browser-image-compression"; // Import the compression library
 
 const initialState = {
   Name: "",
@@ -48,38 +49,53 @@ const AddEditUser = () => {
   };
 
   useEffect(() => {
-    const uploadFile = () => {
+    const uploadFile = async () => {
       if (!file) return;
-      const fileName = new Date().getTime() + "_" + file.name;
-      const storageRef = ref(firebase.storage(), fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
+      try {
+        // Compression options
+        const options = {
+          maxSizeMB: 1, // Max file size in MB
+          maxWidthOrHeight: 800, // Max width or height for resizing
+          useWebWorker: true, // Use a web worker for better performance
+        };
+
+        // Compress the image
+        const compressedFile = await imageCompression(file, options);
+
+        const fileName = new Date().getTime() + "_" + compressedFile.name;
+        const storageRef = ref(firebase.storage(), fileName);
+        const uploadTask = uploadBytesResumable(storageRef, compressedFile);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progress);
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                break;
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              setData((prev) => ({ ...prev, img: downloadURL }));
+            });
           }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData((prev) => ({ ...prev, img: downloadURL }));
-          });
-        }
-      );
+        );
+      } catch (error) {
+        console.error("Error uploading compressed image:", error);
+      }
     };
 
     if (file) {
@@ -153,6 +169,14 @@ const AddEditUser = () => {
     }
   };
 
+  const categoryOptions = [
+    // { key: "appetizer", text: "Appetizer", value: "Appetizer" },
+    { key: "starters", text: "Starters", value: "Starter" },
+    { key: "main_course", text: "Main Course", value: "Main Course" },
+    { key: "dessert", text: "Dessert", value: "Dessert" },
+    // { key: "drink", text: "Drink", value: "Drink" },
+  ];
+
   return (
     <div
       style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
@@ -200,16 +224,27 @@ const AddEditUser = () => {
                         value={Price}
                         error={errors.Price ? { content: errors.Price } : null}
                       />
-                      <Form.Input
-                        label="Category"
-                        placeholder="Enter Category"
-                        name="Category"
-                        onChange={handleChange}
-                        value={Category}
-                        error={
-                          errors.Category ? { content: errors.Category } : null
-                        }
-                      />
+                      <Form.Field>
+                        <label>Category</label>
+                        <Dropdown
+                          placeholder="Select Category"
+                          fluid
+                          selection
+                          options={categoryOptions}
+                          value={Category}
+                          onChange={(e, { value }) =>
+                            setData((prevData) => ({
+                              ...prevData,
+                              Category: value,
+                            }))
+                          }
+                          error={
+                            errors.Category
+                              ? { content: errors.Category }
+                              : null
+                          }
+                        />
+                      </Form.Field>
                       <Form.TextArea
                         label="Description"
                         placeholder="Enter a description of the food"
@@ -224,7 +259,7 @@ const AddEditUser = () => {
                         style={{ overflow: "hidden", resize: "none" }}
                       />
                       <Form.Input
-                        label="Upload Image"
+                        label="Upload Image. Image size below 1MB"
                         type="file"
                         onChange={(e) => setFile(e.target.files[0])}
                       />

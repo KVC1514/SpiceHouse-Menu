@@ -91,3 +91,27 @@
   top: 20%;
   object-fit: cover;
 }
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .video {
+    padding: 4rem;
+    top: 15%;
+  }
+}
+
+@media (max-width: 768px) {
+  .video {
+    padding: 3rem;
+    top: 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  .video {
+    padding: 2rem;
+    top: 5%;
+  }
+}
+
+

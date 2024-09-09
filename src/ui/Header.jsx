@@ -53,9 +53,9 @@ function Header() {
 
       <ul className="mobile-navigation">
         <li>
-          <NavLink activeClassName="active" to={"/"}>
+          {/* <NavLink activeClassName="active" to={"/"}>
             Home
-          </NavLink>
+          </NavLink> */}
         </li>
         <li>
           <NavLink to={"/customerMenu"}>View Menu</NavLink>
@@ -108,9 +108,9 @@ function Header() {
             </Typography>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <ul className="navigation-menu">
-                <li>
+                {/* <li>
                   <Link to={"/"}>Home</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to={"/customerMenu"}>View Menu</Link>
                 </li>

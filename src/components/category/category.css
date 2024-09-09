@@ -1,0 +1,42 @@
+/* Container styling for the category buttons */
+.category-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px; /* Increased gap between buttons */
+  margin: 50px auto; /* Increased top margin to lower the buttons */
+  padding: 30px; /* Increased padding for the container */
+  background-color: #6e0202; /* Bright red background */
+  border-radius: 8px;
+  max-width: 600px;
+  box-shadow: 0px 4px 8px rgba(240, 87, 4, 0.781); /* Soft shadow */
+}
+
+/* Styling for each button */
+.category-button {
+  background-color: #ec4c30; /* Grey button color */
+  color: rgb(232, 103, 43);
+  font-size: 2em; /* Increased font size */
+  border-radius: 25px;
+  padding: 15px 25px; /* Increased padding for larger buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for the buttons */
+.category-button:hover {
+  background-color: #e18419; /* Red color on hover */
+  transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Ensure buttons stack on smaller screens */
+@media (max-width: 600px) {
+  .category-container {
+    flex-direction: column;
+  }
+
+  .category-button {
+    width: 100%;
+    margin-bottom: 15px; /* Increased bottom margin for spacing */
+  }
+}
