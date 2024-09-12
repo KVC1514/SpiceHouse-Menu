@@ -173,8 +173,8 @@ const AddEditUser = () => {
     // { key: "appetizer", text: "Appetizer", value: "Appetizer" },
     { key: "starters", text: "Starters", value: "Starter" },
     { key: "main_course", text: "Main Course", value: "Main Course" },
+    { key: "Breads", text: "Breads", value: "Breads" },
     { key: "dessert", text: "Dessert", value: "Dessert" },
-    // { key: "drink", text: "Drink", value: "Drink" },
   ];
 
   return (

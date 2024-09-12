@@ -74,6 +74,13 @@ function Category({ filterByCategory }) {
       >
         Desserts
       </Button>
+      <Button
+        onClick={() => filterByCategory("Breads")}
+        className="category-button"
+        fluid
+      >
+        Breads
+      </Button>
     </div>
   );
 }

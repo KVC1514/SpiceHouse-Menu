@@ -1,32 +1,173 @@
-import { useState, useEffect } from "react";
-import AppLayout from "../../ui/AppLayout";
+// import { useState, useEffect } from "react";
+// import AppLayout from "../../ui/AppLayout";
+// import { db } from "../../main";
+// import { Card, Grid, Container, Image, Button } from "semantic-ui-react";
+// import { useNavigate } from "react-router-dom";
+// import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+// import ModalComp from "../../components/fileUpload1/pages/ModalComp";
+// import NavBar from "../../components/fileUpload1/NavBar";
+// import Spinner from "../../components/fileUpload1/Spinner";
+// import Category from "../../components/category/Category";
+
+// function Menu() {
+//   const [users, setUsers] = useState([]);
+//   const [open, setOpen] = useState(false);
+//   const [user, setUser] = useState({});
+//   const [loading, setLoading] = useState(true);
+//   const [selectedCategory, setSelectedCategory] = useState("Popular Dishes");
+//   const [filteredUsers, setFilteredUsers] = useState([]);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const unsub = onSnapshot(
+//       collection(db, "users"),
+//       (snapshot) => {
+//         let list = [];
+//         snapshot.docs.forEach((doc) => {
+//           list.push({ id: doc.id, ...doc.data() });
+//         });
+//         setUsers(list);
+//         setLoading(false);
+//       },
+//       (error) => {
+//         console.error("Error fetching data:", error);
+//         setLoading(false);
+//       }
+//     );
+
+//     return () => unsub();
+//   }, []);
+
+//   useEffect(() => {
+//     setFilteredUsers(
+//       users.filter((user) => user.category === selectedCategory)
+//     );
+//   }, [users, selectedCategory]);
+
+//   const handleModal = (item) => {
+//     setOpen(true);
+//     setUser(item);
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (window.confirm("Are you sure you want to delete this?")) {
+//       try {
+//         setOpen(false);
+//         await deleteDoc(doc(db, "users", id));
+//         setUsers(users.filter((user) => user.id !== id));
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     }
+//   };
+
+//   if (loading) {
+//     return <Spinner />;
+//   }
+
+//   return (
+//     <AppLayout>
+//       <NavBar />
+//       <div style={{ display: "flex", height: "100vh" }}>
+//         <div
+//           style={{
+//             flex: "0 0 230px",
+//             overflowY: "auto",
+//             borderRight: "3px solid #ddd",
+//             paddingLeft: "20px",
+//           }}
+//         >
+//           <Category />
+//         </div>
+//         <Container style={{ flex: "1", padding: "20px", overflowY: "auto" }}>
+//           <Grid columns={3} stackable container spacing={3} sx={{ mb: 5 }}>
+//             {filteredUsers.map((item) => (
+//               <Grid.Column key={item.id}>
+//                 <Card>
+//                   <Card.Content>
+//                     <Image
+//                       src={item.img}
+//                       size="medium"
+//                       style={{ height: "175px", width: "300px" }}
+//                     />
+//                     <div style={{ marginTop: "10px" }}>
+//                       <Card.Header style={{ marginTop: "10px" }}>
+//                         {item.Name}
+//                       </Card.Header>
+//                       <div>
+//                         <p>{item.Description}</p>
+//                       </div>
+//                       <div style={{ textAlign: "right" }}>
+//                         <span
+//                           style={{ marginLeft: "10px", textAlign: "right" }}
+//                         >
+//                           {item.Price}
+//                         </span>
+//                       </div>
+//                     </div>
+//                   </Card.Content>
+//                   <Card.Content extra>
+//                     <div style={{ textAlign: "center" }}>
+//                       <Button
+//                         color="green"
+//                         onClick={() => navigate(`/update/${item.id}`)}
+//                       >
+//                         Update
+//                       </Button>
+//                       <Button color="purple" onClick={() => handleModal(item)}>
+//                         View
+//                       </Button>
+//                     </div>
+//                   </Card.Content>
+//                 </Card>
+//               </Grid.Column>
+//             ))}
+//           </Grid>
+//           {open && (
+//             <ModalComp
+//               open={open}
+//               setOpen={setOpen}
+//               handleDelete={handleDelete}
+//               {...user}
+//             />
+//           )}
+//         </Container>
+//       </div>
+//     </AppLayout>
+//   );
+// }
+
+// export default Menu;
+
+import React, { useState, useEffect } from "react";
 import { db } from "../../main";
-import { Card, Grid, Container, Image, Button } from "semantic-ui-react";
-import { useNavigate } from "react-router-dom";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import ModalComp from "../../components/fileUpload1/pages/ModalComp";
-import NavBar from "../../components/fileUpload1/NavBar";
+import { collection, onSnapshot } from "firebase/firestore"; // Firestore methods
+import { Card, Grid, Container, Image, Button, Input } from "semantic-ui-react"; // UI components
+import AppLayout from "../../ui/AppLayout";
 import Spinner from "../../components/fileUpload1/Spinner";
-import Category from "../../components/category/Category";
+import ModalComp from "../../components/fileUpload1/pages/ModalComp";
+import Category from "../../components/category/Category"; // Import Category component
 
 function Menu() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); // All users fetched from Firebase
+  const [filteredUsers, setFilteredUsers] = useState([]); // Users filtered by category and search
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("Popular Dishes");
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
+  const [selectedCategory, setSelectedCategory] = useState("all"); // Category filter state
 
+  // Fetch data from Firebase Firestore
   useEffect(() => {
     const unsub = onSnapshot(
       collection(db, "users"),
       (snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
+        const list = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setUsers(list);
+        setFilteredUsers(list); // Initially show all users
         setLoading(false);
       },
       (error) => {
@@ -35,14 +176,39 @@ function Menu() {
       }
     );
 
-    return () => unsub();
+    return () => unsub(); // Cleanup subscription on unmount
   }, []);
 
-  useEffect(() => {
-    setFilteredUsers(
-      users.filter((user) => user.category === selectedCategory)
-    );
-  }, [users, selectedCategory]);
+  // Handle filtering users by category and search query
+  const filterByCategory = (category) => {
+    setSelectedCategory(category); // Update selected category
+    const filtered = users.filter((user) => {
+      // Check if the user matches the category and search query
+      const matchesCategory = category === "all" || user.Category === category;
+      const matchesSearchQuery = user.Name.toLowerCase().includes(
+        searchQuery.toLowerCase()
+      );
+      return matchesCategory && matchesSearchQuery;
+    });
+    setFilteredUsers(filtered); // Update the filtered users
+  };
+
+  // Handle search query change
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query); // Update search query
+
+    // Filter users based on current category and search query
+    const filtered = users.filter((user) => {
+      const matchesCategory =
+        selectedCategory === "all" || user.Category === selectedCategory;
+      const matchesSearchQuery = user.Name.toLowerCase().includes(
+        query.toLowerCase()
+      );
+      return matchesCategory && matchesSearchQuery;
+    });
+    setFilteredUsers(filtered);
+  };
 
   const handleModal = (item) => {
     setOpen(true);
@@ -67,72 +233,92 @@ function Menu() {
 
   return (
     <AppLayout>
-      <NavBar />
-      <div style={{ display: "flex", height: "100vh" }}>
-        <div
-          style={{
-            flex: "0 0 230px",
-            overflowY: "auto",
-            borderRight: "3px solid #ddd",
-            paddingLeft: "20px",
-          }}
-        >
-          <Category />
-        </div>
-        <Container style={{ flex: "1", padding: "20px", overflowY: "auto" }}>
-          <Grid columns={3} stackable container spacing={3} sx={{ mb: 5 }}>
-            {filteredUsers.map((item) => (
-              <Grid.Column key={item.id}>
-                <Card>
-                  <Card.Content>
-                    <Image
-                      src={item.img}
-                      size="medium"
-                      style={{ height: "175px", width: "300px" }}
-                    />
-                    <div style={{ marginTop: "10px" }}>
-                      <Card.Header style={{ marginTop: "10px" }}>
-                        {item.Name}
-                      </Card.Header>
-                      <div>
-                        <p>{item.Description}</p>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <span
-                          style={{ marginLeft: "10px", textAlign: "right" }}
-                        >
-                          {item.Price}
-                        </span>
-                      </div>
-                    </div>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <div style={{ textAlign: "center" }}>
-                      <Button
-                        color="green"
-                        onClick={() => navigate(`/update/${item.id}`)}
-                      >
-                        Update
-                      </Button>
-                      <Button color="purple" onClick={() => handleModal(item)}>
-                        View
-                      </Button>
-                    </div>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            ))}
-          </Grid>
-          {open && (
-            <ModalComp
-              open={open}
-              setOpen={setOpen}
-              handleDelete={handleDelete}
-              {...user}
+      <div
+        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
+      >
+        <div style={{ display: "flex", flex: 1, overflowY: "auto" }}>
+          <div
+            style={{
+              flex: "0 0 230px",
+              paddingLeft: "20px",
+              marginTop: "20px",
+            }}
+          >
+            <Category filterByCategory={filterByCategory} />
+          </div>
+
+          <Container style={{ flex: 1, minHeight: "500px" }}>
+            <Input
+              icon="search"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              fluid
+              style={{
+                marginBottom: "20px",
+                width: "300px",
+                marginLeft: "37px",
+              }}
             />
-          )}
-        </Container>
+            <Grid columns={3} stackable container spacing={3}>
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((item) => (
+                  <Grid.Column key={item.id}>
+                    <Card style={{ width: "300px", height: "400px" }}>
+                      <Card.Content>
+                        <Image
+                          src={item.img}
+                          size="medium"
+                          style={{
+                            height: "175px",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                          onError={(e) => {
+                            e.target.src = "path/to/placeholder/image.png"; // Placeholder image
+                          }}
+                        />
+                        <div style={{ marginTop: "10px" }}>
+                          <Card.Header>{item.Name}</Card.Header>
+                          <div
+                            style={{
+                              height: "50px",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p>{item.Description}</p>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <span>{item.Price}</span>
+                          </div>
+                        </div>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <div style={{ textAlign: "center" }}>
+                          <Button color="red" onClick={() => handleModal(item)}>
+                            View
+                          </Button>
+                        </div>
+                      </Card.Content>
+                    </Card>
+                  </Grid.Column>
+                ))
+              ) : (
+                <div>No items found</div>
+              )}
+            </Grid>
+          </Container>
+        </div>
       </div>
+      {open && (
+        <ModalComp
+          open={open}
+          setOpen={setOpen}
+          {...user}
+          handleDelete={handleDelete}
+        />
+      )}
     </AppLayout>
   );
 }
