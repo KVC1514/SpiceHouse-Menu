@@ -81,7 +81,7 @@ function Header() {
       <Link to="/">
         <h1 style={headerStyle}>SPICE HOUSE</h1>
       </Link>
-      <h1 style={headerStyle2}>Best Indian Resturant In Northern Ireland</h1>
+      <h1 style={headerStyle2}>Indian And Nepali Restaurant</h1>
       <Box>
         <AppBar component={"nav"} sx={{ bgcolor: "red" }}>
           <Toolbar>

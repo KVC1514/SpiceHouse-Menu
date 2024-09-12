@@ -174,6 +174,7 @@ const AddEditUser = () => {
     { key: "starters", text: "Starters", value: "Starter" },
     { key: "main_course", text: "Main Course", value: "Main Course" },
     { key: "Breads", text: "Breads", value: "Breads" },
+    { key: "Sides", text: "Sides", value: "Sides" },
     { key: "dessert", text: "Dessert", value: "Dessert" },
   ];
 
