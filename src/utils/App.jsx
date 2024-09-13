@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Menu from "../features/menu/Menu";
-import Home from "../ui/Home";
+
 import Error from "../ui/Error";
 import Calculator from "../features/menu/Calculator";
 import Weather from "../features/menu/Weather";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <CustomerMenu />,
       },
       {
         path: "/menu",
