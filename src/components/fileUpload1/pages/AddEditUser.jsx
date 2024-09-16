@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect, useRef } from "react";
 import { Button, Form, Grid, Loader, Dropdown } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -13,7 +15,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../main";
-import imageCompression from "browser-image-compression"; // Import the compression library
 
 const initialState = {
   Name: "",
@@ -48,60 +49,36 @@ const AddEditUser = () => {
     }
   };
 
-  useEffect(() => {
-    const uploadFile = async () => {
-      if (!file) return;
+  const uploadImage = async (file) => {
+    // Simplified function
+    try {
+      const fileName = new Date().getTime() + "_" + file.name;
+      const storageRef = ref(firebase.storage(), fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-      try {
-        // Compression options
-        const options = {
-          maxSizeMB: 1, // Max file size in MB
-          maxWidthOrHeight: 800, // Max width or height for resizing
-          useWebWorker: true, // Use a web worker for better performance
-        };
-
-        // Compress the image
-        const compressedFile = await imageCompression(file, options);
-
-        const fileName = new Date().getTime() + "_" + compressedFile.name;
-        const storageRef = ref(firebase.storage(), fileName);
-        const uploadTask = uploadBytesResumable(storageRef, compressedFile);
-
+      return new Promise((resolve, reject) => {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             setProgress(progress);
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-              default:
-                break;
-            }
           },
           (error) => {
-            console.log(error);
+            reject(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setData((prev) => ({ ...prev, img: downloadURL }));
-            });
+            getDownloadURL(uploadTask.snapshot.ref)
+              .then((downloadURL) => resolve(downloadURL))
+              .catch((error) => reject(error));
           }
         );
-      } catch (error) {
-        console.error("Error uploading compressed image:", error);
-      }
-    };
-
-    if (file) {
-      uploadFile();
+      });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
     }
-  }, [file]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,32 +123,41 @@ const AddEditUser = () => {
   };
 
   const handleSubmit = async (e) => {
+    // Updated function
     e.preventDefault();
     let errors = validate();
     if (Object.keys(errors).length) return setErrors(errors);
 
     setIsSubmit(true);
     try {
-      if (!id) {
-        await addDoc(collection(db, "users"), {
-          ...data,
-          timestamp: serverTimestamp(),
-        });
-      } else {
-        await updateDoc(doc(db, "users", id), {
-          ...data,
-          timestamp: serverTimestamp(),
-        });
+      let imageUrl = null;
+
+      if (file) {
+        imageUrl = await uploadImage(file);
       }
+
+      const documentData = {
+        ...data,
+        img: imageUrl,
+        timestamp: serverTimestamp(),
+      };
+
+      if (!id) {
+        await addDoc(collection(db, "users"), documentData);
+      } else {
+        await updateDoc(doc(db, "users", id), documentData);
+      }
+
       navigate("/menu");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSubmit(false);
     }
   };
 
   const categoryOptions = [
-    // { key: "appetizer", text: "Appetizer", value: "Appetizer" },
-    { key: "starters", text: "Starters", value: "Starter" },
+    { key: "starter", text: "Starter", value: "Starter" },
     { key: "main_course", text: "Main Course", value: "Main Course" },
     { key: "Breads", text: "Breads", value: "Breads" },
     { key: "Sides", text: "Sides", value: "Sides" },
