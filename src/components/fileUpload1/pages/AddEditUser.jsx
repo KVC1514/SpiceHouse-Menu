@@ -145,7 +145,13 @@ const AddEditUser = () => {
         await updateDoc(doc(db, "users", id), documentData);
       }
 
-      navigate("/menu");
+      // Resetting the form to the initial state after sucessful submission
+      setData(initialState);
+      setFile(null); /*Clears the upload file */
+      setErrors({}); /*Clears any errors*/
+      setProgress(null); // resets the upload progress
+
+      navigate("/add");
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,5 +1,3 @@
-
-
 // export default Menu;
 import React, { useState, useEffect } from "react";
 import { db } from "../../main";
@@ -9,6 +7,7 @@ import AppLayout from "../../ui/AppLayout";
 import Spinner from "../../components/fileUpload1/Spinner";
 import ModalComp from "../../components/fileUpload1/pages/ModalComp";
 import Category from "../../components/category/Category"; // Import Category component
+// import NavBar from "../../components/fileUpload1/NavBar";
 
 function Menu() {
   const [users, setUsers] = useState([]); // All users fetched from Firebase
@@ -109,6 +108,7 @@ function Menu() {
               marginTop: "20px",
             }}
           >
+            {/* <NavBar /> */}
             <Category filterByCategory={filterByCategory} />
           </div>
 
