@@ -290,7 +290,7 @@ h2 {
 }
 /* Override Semantic UI button margins */
 .category-button {
-  background-color: rgb(255, 255, 255)#ec7530 !important;
+  background-color: rgb(255, 255, 255) #ec7530 !important;
   color: black !important;
   font-size: 1.2em !important; /* Ensure button font size is reduced */
   border-radius: 25px !important;
@@ -435,4 +435,37 @@ h2 {
 
 .navigation-menu li a:hover {
   color: #4183c4;
+}
+
+/* Global CSS */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.add-edit-user-page {
+  .add-edit-user-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the page fills the viewport */
+  }
+
+  .content {
+    flex-grow: 1; /* Allow the content to expand and push the footer down */
+  }
+
+  .add-edit-form {
+    margin-bottom: 2rem; /* Maintain spacing at the bottom of the form */
+  }
+
+  .footer {
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    position: relative !important; /* Remove any fixed positioning */
+  }
 }

@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useRef } from "react";
 import { Button, Form, Grid, Loader, Dropdown } from "semantic-ui-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -15,6 +13,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../main";
+// import Footer from "../../../../public/pages/Footer"; // Import your Footer component
 
 const initialState = {
   Name: "",
@@ -50,7 +49,6 @@ const AddEditUser = () => {
   };
 
   const uploadImage = async (file) => {
-    // Simplified function
     try {
       const fileName = new Date().getTime() + "_" + file.name;
       const storageRef = ref(firebase.storage(), fileName);
@@ -123,7 +121,6 @@ const AddEditUser = () => {
   };
 
   const handleSubmit = async (e) => {
-    // Updated function
     e.preventDefault();
     let errors = validate();
     if (Object.keys(errors).length) return setErrors(errors);
@@ -165,15 +162,13 @@ const AddEditUser = () => {
   ];
 
   return (
-    <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-    >
-      <h1>
+    <div className="add-edit-user-page">
+      <div className="content">
         <Grid
           centered
           verticalAlign="middle"
           columns="3"
-          style={{ height: "80vh" }}
+          // style={{ height: "80vh" }}
         >
           <Grid.Row>
             <Grid.Column textAlign="center">
@@ -183,7 +178,7 @@ const AddEditUser = () => {
                 ) : (
                   <>
                     <h2>Add Items</h2>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} className="add-edit-form">
                       <Form.Input
                         label="Item name"
                         error={errors.Name ? { content: errors.Name } : null}
@@ -260,7 +255,8 @@ const AddEditUser = () => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </h1>
+      </div>
+      {/* <Footer /> */}
     </div>
   );
 };
