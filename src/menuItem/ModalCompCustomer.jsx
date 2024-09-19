@@ -1,5 +1,3 @@
-
-
 import { Modal, Header, Image, Button } from "semantic-ui-react";
 
 const ModalCompCustomer = ({
@@ -39,13 +37,13 @@ const ModalCompCustomer = ({
         <Button color="black" onClick={() => setOpen(false)}>
           Cancel
         </Button>
-        <Button
+        {/* <Button
           color="red"
-          content="Delete"
+          // content="Delete"
           labelPosition="right"
-          onClick={() => handleDelete(id)} // Ensure handleDelete function is defined and accessible
+          // onClick={() => handleDelete(id)} // Ensure handleDelete function is defined and accessible
           icon="trash" // Changed icon to trash for consistency
-        />
+        /> */}
       </Modal.Actions>
     </Modal>
   );
